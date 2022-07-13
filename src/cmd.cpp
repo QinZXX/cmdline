@@ -93,6 +93,16 @@ void enter_globalview_func(void)
     g_current_view = "";
 }
 
+void set_hostname_func(void)  // TODO: input
+{
+    static int count = 1;
+    if (count % 2 == 1)
+        g_hostname = "SG250";
+    else 
+        g_hostname = "SB6000";
+    count++;
+}
+
 /**********************/
 cmd_node_t* find_cmd_node(string in_name)
 {
@@ -139,6 +149,7 @@ void construct_cmd_tree()
     cmd_node_t *node_setip = new cmd_node_t("setip", "set your ip", setip_func);
     cmd_node_t *node_config = new cmd_node_t("config", "enter configuration view", enter_config_func);
     cmd_node_t *node_end = new cmd_node_t("end", "return to global view", enter_globalview_func);
+    cmd_node_t *node_hostname = new cmd_node_t("hostname", "return to global view", set_hostname_func);
 
     add_cmd_to_top(node_show);
     add_cmd_to_top(node_help);
@@ -146,6 +157,7 @@ void construct_cmd_tree()
     add_cmd_to_top(node_setip);
     add_cmd_to_top(node_config);
     add_cmd_to_top(node_end);
+    add_cmd_to_top(node_hostname);
 
     sort_cmd_tree();
 }
