@@ -125,13 +125,13 @@ void exec_extern_func(void)
     cout << "Please input the extern cmdline which you wanna execute:" << endl;
     string cmd;
     FILE* fp = nullptr;
-    char read_str[512] = {0};
+    char read_str[512] = { 0 };
 
     cin >> cmd;
     // getline(cin, cmd);
 
     if (nullptr == (fp = popen(cmd.c_str(), "r"))) {
-        cout << "popen failed"<< endl;
+        cout << "popen failed" << endl;
         return;
     }
     while (fgets(read_str, sizeof(read_str), fp)) {
@@ -179,7 +179,14 @@ void auto_complete_cmd(cmd_node_t* src_node)
 
 void parse_cmd(string cmd_name)
 {
-    // find cmd_node by name;
+    // check input
+    for (int i = 0; i < cmd_name.size(); ++i) {
+        if (cmd_name[i] < 'a' || cmd_name[i] > 'z') {
+            cout << "illegal input, cmd line can only include [a-z]!" << endl;
+            return;
+        }
+    }
+
     cmd_node_t* res;
     res = find_cmd_node(cmd_name);
     if (nullptr == res) {
@@ -187,7 +194,7 @@ void parse_cmd(string cmd_name)
         return;
     } else {
         if (true == res->isEnd) {
-            cout << "whole cmd word find! cmd name:  " << res->name << endl;
+            // cout << "whole cmd word find! cmd name:  " << res->name << endl;
             res->func();
         } else {
             cout << "Please input a complete cmd. Which cmd you mean?" << endl;
