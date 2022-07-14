@@ -11,37 +11,25 @@ using namespace std;
 extern string g_hostname;
 extern string g_current_view;
 
-typedef void (*cmd_fun_ptr)(void);
-// TODO: handle input
-class cmd_node_t {
-public:
-    string name;
-    string des;
-    cmd_fun_ptr func;
-    bool isEnd;
-    cmd_node_t* child[MAX_CHILD];
-    // vector<string> input_list;
+cmd_node_t::cmd_node_t()
+{
+    name = "";
+    des = "";
+    func = NULL;
+    isEnd = false;
 
-    cmd_node_t()
-    {
-        name = "";
-        des = "";
-        func = NULL;
-        isEnd = false;
-
-        for (int i = 0; i < MAX_CHILD; ++i) {
-            child[i] = nullptr;
-        }
+    for (int i = 0; i < MAX_CHILD; ++i) {
+        child[i] = nullptr;
     }
+}
 
-    cmd_node_t(const string& in_name, const string& in_des, cmd_fun_ptr in_func, bool is_end = true)
-        : name(in_name)
-        , des(in_des)
-        , func(in_func)
-        , isEnd(is_end)
-    {
-    }
-};
+cmd_node_t::cmd_node_t(const string& in_name, const string& in_des, cmd_fun_ptr in_func, bool is_end)
+    : name(in_name)
+    , des(in_des)
+    , func(in_func)
+    , isEnd(is_end)
+{
+}
 
 extern string g_ip;
 // vector<cmd_node_t*> g_cmd_top;
@@ -69,7 +57,7 @@ void show_func(void)
 
 void show_all_cmd(cmd_node_t* cur)
 {
-    //cmd_node_t* cur = g_cmd_root;
+    // cmd_node_t* cur = g_cmd_root;
     if (nullptr == cur) {
         return;
     }
@@ -255,5 +243,5 @@ void free_all_cmd_modes()
         node = nullptr;
     }
     */
-   // TODO
+    // TODO
 }
