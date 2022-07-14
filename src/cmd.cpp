@@ -123,11 +123,18 @@ void set_hostname_func(void) // TODO: input
 void exec_extern_func(void)
 {
     cout << "Please input the extern cmdline which you wanna execute:" << endl;
-    string cmd;
+    //char cmd[512];
     FILE* fp = nullptr;
     char read_str[512] = { 0 };
 
+    string cmd;
     cin >> cmd;
+
+    //cin.clear();
+    //cin.getline(cmd, 512, '\n');
+    
+    //scanf("%[^\n]", cmd); // input one line
+    
     // getline(cin, cmd);
 
     if (nullptr == (fp = popen(cmd.c_str(), "r"))) {
@@ -135,8 +142,9 @@ void exec_extern_func(void)
         return;
     }
     while (fgets(read_str, sizeof(read_str), fp)) {
-        cout << read_str << endl;
+        cout << read_str;
     }
+    cout << endl;
     pclose(fp);
 }
 
