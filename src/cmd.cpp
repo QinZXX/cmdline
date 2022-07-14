@@ -120,6 +120,26 @@ void set_hostname_func(void) // TODO: input
     count++;
 }
 
+void exec_extern_func(void)
+{
+    cout << "Please input the extern cmdline which you wanna execute:" << endl;
+    string cmd;
+    FILE* fp = nullptr;
+    char read_str[512] = {0};
+
+    cin >> cmd;
+    // getline(cin, cmd);
+
+    if (nullptr == (fp = popen(cmd.c_str(), "r"))) {
+        cout << "popen failed"<< endl;
+        return;
+    }
+    while (fgets(read_str, sizeof(read_str), fp)) {
+        cout << read_str << endl;
+    }
+    pclose(fp);
+}
+
 /**********************/
 cmd_node_t* find_cmd_node(string in_name)
 {
@@ -223,6 +243,7 @@ void construct_cmd_tree()
     cmd_node_t* node_config = new cmd_node_t("config", "enter configuration view", enter_config_func);
     cmd_node_t* node_end = new cmd_node_t("end", "return to global view", enter_globalview_func);
     cmd_node_t* node_hostname = new cmd_node_t("hostname", "return to global view", set_hostname_func);
+    cmd_node_t* node_exec = new cmd_node_t("exec", "execute extern cmd program", exec_extern_func);
 
     add_cmd_to_top(node_show);
     add_cmd_to_top(node_help);
@@ -231,6 +252,7 @@ void construct_cmd_tree()
     add_cmd_to_top(node_config);
     add_cmd_to_top(node_end);
     add_cmd_to_top(node_hostname);
+    add_cmd_to_top(node_exec);
 
     sort_cmd_tree();
 }
