@@ -65,7 +65,7 @@ void show_all_cmd(cmd_node_t* cur)
     for (int i = 0; i < MAX_CHILD; ++i) {
         if (nullptr != cur->child[i]) {
             if (true == cur->child[i]->isEnd) {
-                printf("  %-10s\t%s\n", cur->name.c_str(), cur->des.c_str());
+                printf("  %-10s\t%s\n", cur->child[i]->name.c_str(), cur->des.c_str());
             }
             show_all_cmd(cur->child[i]);
         }
